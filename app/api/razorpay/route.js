@@ -12,7 +12,7 @@ export const POST = async (req) => {
     const body = Object.fromEntries(new URLSearchParams(bodyText));
 
     // Log body content for debugging
-    console.log('Received Body:', body);
+    //console.log('Received Body:', body);
 
     // Check if order exists
     const payment = await Payment.findOne({ oid: body.razorpay_order_id });
@@ -37,7 +37,7 @@ export const POST = async (req) => {
         secret
     );
 
-    console.log('Is Signature Valid:', isValid);
+   //console.log('Is Signature Valid:', isValid);
 
     if (isValid) {
         const updatedPayment = await Payment.findOneAndUpdate(
