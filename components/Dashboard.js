@@ -44,18 +44,24 @@ const Dashboard = () => {
         const response = await updateProfile(form, oldUsername);
     
         if (response.success) {
-            toast.success("Profile Updated Successfully!", { autoClose: 3000 });
+            toast.success("Profile Updated Successfully!", { autoClose: 2000 });
     
-            if (form.username && form.username !== oldUsername) {
-                await update({ name: form.username }); // optional
+            // Check if username has changed
+            const newUsername = form.username || oldUsername;
     
-                // ✅ Force reload to refresh session across app
-                window.location.href = `/${form.username}`;
+            if (newUsername !== oldUsername) {
+                await update({ name: newUsername }); // Update session name
             }
+    
+            // ✅ Redirect after a short delay to allow toast to show
+            setTimeout(() => {
+                window.location.href = `/${newUsername}`;
+            }, 2000);
         } else {
             toast.error(response.error || "Failed to update profile", { autoClose: 3000 });
         }
     };
+    
     
     
     return (
